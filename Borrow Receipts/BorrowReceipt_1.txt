@@ -1,9 +1,0 @@
-==================  RECEIPT  ==================
-Borrow ID: 1
-Date Borrowed: 2026-09-22 15:13:11.0
-Expected Return Date: 2026-09-26 15:13:11.0
-Borrower:
-  1. Nicee Jelaine Estember
-Items Borrowed:
-  [2x] Petri Dish
-===============================================

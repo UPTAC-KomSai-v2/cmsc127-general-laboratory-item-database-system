@@ -1,9 +1,0 @@
-==================  RECEIPT  ==================
-Borrow ID: 23
-Date Borrowed: 2025-05-13 16:08:50.0
-Expected Return Date: 2025-05-17 16:08:50.0
-Borrower:
-  1. rawr (Leader)
-  2. ror
-Items Borrowed:
-===============================================
