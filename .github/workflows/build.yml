@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: genlab_db
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Load schema and seed data
+        run: |
+          mysql -h 127.0.0.1 -u root < database/schema.sql
+          mysql -h 127.0.0.1 -u root genlab_db < database/seed.sql
+
+      - name: Build and test
+        env:
+          GLIMS_DB_URL: jdbc:mysql://127.0.0.1:3306/genlab_db
+          GLIMS_TEST_DB_USER: root
+          GLIMS_TEST_DB_PASSWORD: ""
+        run: mvn -B verify
