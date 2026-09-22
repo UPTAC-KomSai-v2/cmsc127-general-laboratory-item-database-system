@@ -62,8 +62,8 @@ The system is built with data integrity and user experience as top priorities, f
 🧾 **Automated Receipt Generation:**
 - Automatically creates and saves `.txt` receipts for both borrow and return transactions for auditing and record-keeping.
 
-🚀 **Automated Database Deployment:**
-- On first login with root/admin credentials, the system automatically creates the database, schema, tables, triggers, and populates initial data.
+🧰 **Manual Database Setup:**
+- The schema and reference data are provided as plain SQL files under `database/`; import them once before first use (see Installation below).
 
 ---
 
@@ -80,8 +80,9 @@ The system is built with data integrity and user experience as top priorities, f
 ## Tech Stack
 
 - **Frontend:** Java Swing
-- **Backend:** Java
-- **Database:** MySQL
+- **Backend:** Java 17
+- **Build:** Maven
+- **Database:** MySQL 8.0+
 - **Connectivity:** JDBC (Java Database Connectivity)
 
 ---
@@ -94,35 +95,43 @@ Follow these instructions to get a local copy of GLIMS up and running on your ma
 
 You must have the following software installed on your system:
 
-- **Java Development Kit (JDK):** Version 24 or newer.
+- **Java Development Kit (JDK):** Version 17 or newer.
+- **Apache Maven**
 - **MySQL Server:** Version 8.0 or newer.
-- **An IDE (Optional but Recommended):** IntelliJ IDEA, Eclipse, or VS Code with Java extensions.
+- **An IDE (Optional but Recommended):** IntelliJ IDEA, Eclipse, or VS Code with Java extensions (VS Code's Java extension pack auto-detects the Maven `pom.xml`).
 
 ### Installation
 
 1.  **Clone the Repository**
     ```sh
-    git clone https://github.com/your-username/glims-repo.git
+    git clone https://github.com/UPTAC-KomSai-v2/cmsc127-general-laboratory-item-database-system.git
+    cd cmsc127-general-laboratory-item-database-system
     ```
 
-2.  **Set Up MySQL User**
-    Ensure you have a MySQL user with privileges to `CREATE DATABASE`. The `root` user will work, or you can create a dedicated user for this application.
-    ```sql
-    -- Example of creating a new user in MySQL
-    CREATE USER 'glims_admin'@'localhost' IDENTIFIED BY 'your_password';
-    GRANT ALL PRIVILEGES ON *.* TO 'glims_admin'@'localhost' WITH GRANT OPTION;
-    FLUSH PRIVILEGES;
+2.  **Create the database and load the schema**
+    There is no automatic database provisioning on login — run the SQL files yourself, once, before first launch:
+    ```sh
+    mysql -u <user> -p < database/schema.sql
+    mysql -u <user> -p genlab_db < database/seed.sql   # optional reference/sample data
     ```
+    `database/schema.sql` creates the `genlab_db` database, tables, triggers, and views. `database/seed.sql` loads course/section/instructor/category reference data plus a handful of synthetic sample borrowers for local testing — it contains no real personal data.
 
-3.  **Run the Application for the First Time**
-    - Open the project in your IDE.
-    - Locate and run the `Main.java` file.
-    - The application will launch, presenting the login screen.
-    - **Crucially**, for the very first run, log in using the MySQL user credentials you set up in the previous step (e.g., username `glims_admin` or `root`).
-    - The application will detect that the `genlab_db` database does not exist and will **automatically create it**, import the schema, populate it with data, and set up all necessary triggers. This process is handled by the `ImportSQLWithJDBC` class.
+3.  **Configure the database connection**
+    By default the app connects to `jdbc:mysql://localhost:3306/genlab_db`. To point at a different host, copy `.env.example` to `.env` and edit it:
+    ```sh
+    cp .env.example .env
+    # then edit .env, e.g. GLIMS_DB_URL=jdbc:mysql://localhost:3306/genlab_db
+    ```
+    `.env` is read automatically from the working directory at startup (see `Config.java`) and is gitignored — never commit your real one. A real `GLIMS_DB_URL` environment variable takes precedence over `.env` if both are set.
 
-4.  **Subsequent Logins**
-    After the initial setup, the database and a default staff user will be created. You can then log in with the application-specific credentials for daily use.
+    The MySQL **username and password are entered at the login screen** — they're used directly as your MySQL credentials, so log in with a MySQL user that has privileges on `genlab_db`.
+
+4.  **Build and run**
+    ```sh
+    mvn -q package
+    java -jar target/glims-1.0.0.jar
+    ```
+    Run this from the repository root (or copy the `Assets/`, `Borrow Receipts/`, and `Return Receipts/` folders next to the jar) — images, fonts, and receipts are resolved relative to the working directory.
 
 ---
 
@@ -142,12 +151,12 @@ You must have the following software installed on your system:
 
 ## Project Architecture
 
-The project is structured using the **Model-View-Controller (MVC)** design pattern to ensure a clean separation of concerns.
+The project is structured using the **Model-View-Controller (MVC)** design pattern to ensure a clean separation of concerns. Source lives under `src/main/java/com/glims/` (Maven's standard layout); there is currently a single `com.glims` package rather than a deeper repository/service split.
 
 -   **Model:** Represents the data and business logic.
-    -   `genlab_schema.txt`: The database schema defines the data structure.
+    -   `database/schema.sql`, `database/seed.sql`: The database schema and reference/sample data (see [Database Schema](#database-schema)).
     -   `Queries.java`: Acts as the Data Access Object (DAO), handling all JDBC communication and SQL queries. It uses `PreparedStatement` to prevent SQL injection and manages database transactions for data integrity.
-    -   Database Triggers: Core business logic (e.g., updating stock on borrow) is embedded in the database itself for maximum robustness.
+    -   Database Triggers: Core business logic (e.g., updating stock on borrow/return) is embedded in the database itself for maximum robustness.
 
 -   **View:** The user interface of the application.
     -   `GUI*.java` files: All classes prefixed with `GUI` are responsible for rendering the UI components. They do not contain business logic.
@@ -174,6 +183,16 @@ A brief overview of the key tables:
 An Entity-Relationship Diagram (ERD) would look like this:
 
 ![ERD](docs/erd/database_schema.png)
+
+### Configuration
+
+Copy `.env.example` to `.env` to override defaults; a real environment variable of the same name always takes precedence over `.env`.
+
+| Variable        | Default                                    | Purpose                        |
+| ---------------- | ------------------------------------------- | ------------------------------- |
+| `GLIMS_DB_URL`   | `jdbc:mysql://localhost:3306/genlab_db`     | JDBC connection URL             |
+
+The database username and password are entered at the login screen (not read from `.env`/environment variables) and used directly as your MySQL credentials — there is no separate application-level user table. `.env` is gitignored; never commit your real one.
 
 ---
 

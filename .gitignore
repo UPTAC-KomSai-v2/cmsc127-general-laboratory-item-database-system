@@ -1,0 +1,18 @@
+# Build output
+target/
+*.class
+dependency-reduced-pom.xml
+
+# Local environment / secrets
+.env
+*.local.properties
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# OS
+.DS_Store
+
+Borrow_Receipts/

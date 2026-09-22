@@ -1,9 +1,0 @@
-==================  RECEIPT  ==================
-Borrow ID: 14
-Date Borrowed: 2025-05-13 00:25:03.0
-Expected Return Date: 2025-05-17 00:25:03.0
-Borrower:
-  1. James Reid
-Items Borrowed:
-  [1x] hello (er)
-===============================================

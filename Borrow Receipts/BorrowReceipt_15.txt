@@ -1,9 +1,0 @@
-==================  RECEIPT  ==================
-Borrow ID: 15
-Date Borrowed: 2025-05-13 15:44:31.0
-Expected Return Date: 2025-05-17 15:44:31.0
-Borrower:
-  1. rawr
-Items Borrowed:
-  [1x] Beaker (100 mL)
-===============================================
