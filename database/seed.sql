@@ -102,3 +102,54 @@ INSERT INTO `borrower` VALUES
   ('2023-00008','Placeholder Eight','placeholder8@up.edu.ph','09171234508','BS in Biology'),
   ('2023-00009','Placeholder Nine','placeholder9@up.edu.ph','09171234509','BS in Computer Science'),
   ('2024-00010','Fixture Borrower Ten','fixture10@up.edu.ph','09171234510','BS in Applied Mathematics');
+
+-- Starter item catalog. The original data dump shipped with an EMPTY item
+-- table too (inventory was meant to be loaded via the app's own CSV import
+-- feature, using a file that was never committed to this repo) -- without
+-- this, the Borrow Item screen has nothing to show. Item names match
+-- ImageStorage.java's hardcoded name list exactly so their pictures render;
+-- quantities are arbitrary starter stock for local testing.
+INSERT INTO `item` (item_name, unit, qty, category_id, status) VALUES
+  ('Beaker', NULL, 20, 5470001, 'Available'),
+  ('Burette', NULL, 15, 5470001, 'Available'),
+  ('Cuvette', NULL, 30, 5470001, 'Available'),
+  ('Erlenmeyer Flask', NULL, 20, 5470001, 'Available'),
+  ('Funnel', NULL, 15, 5470001, 'Available'),
+  ('Glass Rod', NULL, 25, 5470001, 'Available'),
+  ('Graduated Cylinder', NULL, 15, 5470001, 'Available'),
+  ('Pipettes', NULL, 30, 5470001, 'Available'),
+  ('Test Tube', NULL, 50, 5470001, 'Available'),
+  ('Volumetric Flask', NULL, 15, 5470001, 'Available'),
+  ('Watch Glass', NULL, 20, 5470001, 'Available'),
+  ('Analytical Balance', NULL, 4, 5470002, 'Available'),
+  ('Centrifuge', NULL, 3, 5470002, 'Available'),
+  ('Conductivity Meter', NULL, 3, 5470002, 'Available'),
+  ('Multimeter', NULL, 6, 5470002, 'Available'),
+  ('pH Meter', NULL, 5, 5470002, 'Available'),
+  ('Refractometer', NULL, 3, 5470002, 'Available'),
+  ('Spectrophotometer', NULL, 2, 5470002, 'Available'),
+  ('Thermometer', NULL, 15, 5470002, 'Available'),
+  ('Triple Beam Balance', NULL, 6, 5470002, 'Available'),
+  ('Bunsen Burner', NULL, 10, 5470003, 'Available'),
+  ('Burette Clamp', NULL, 15, 5470003, 'Available'),
+  ('Forcep', NULL, 20, 5470003, 'Available'),
+  ('Hot Plate', NULL, 6, 5470003, 'Available'),
+  ('Inoculation Loop', NULL, 20, 5470003, 'Available'),
+  ('Scalpel', NULL, 15, 5470003, 'Available'),
+  ('Spatula', NULL, 20, 5470003, 'Available'),
+  ('Test Tube Clamp', NULL, 20, 5470003, 'Available'),
+  ('Test Tube Rack', NULL, 15, 5470003, 'Available'),
+  ('Tong', NULL, 15, 5470003, 'Available'),
+  ('Tweezers', NULL, 20, 5470003, 'Available'),
+  ('Culture Media', NULL, 25, 5470004, 'Available'),
+  ('Reagents Bottle', NULL, 25, 5470004, 'Available'),
+  ('Cryovial', NULL, 40, 5470005, 'Available'),
+  ('Desiccator', NULL, 5, 5470005, 'Available'),
+  ('Wash Bottles', NULL, 20, 5470005, 'Available'),
+  ('Centrifuge Tube', NULL, 40, 5470006, 'Available'),
+  ('Culture Flask', NULL, 15, 5470006, 'Available'),
+  ('Petri Dish', NULL, 40, 5470006, 'Available'),
+  ('Electrophoresis Apparatus', NULL, 3, 5470007, 'Available'),
+  ('Microscope', NULL, 8, 5470007, 'Available'),
+  ('Laboratory Coat', NULL, 20, 5470008, 'Available'),
+  ('Safety Goggles', NULL, 30, 5470008, 'Available');

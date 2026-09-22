@@ -16,9 +16,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Queries {
-    // Overridable via the GLIMS_DB_URL environment variable so the DB host
-    // never needs to be hardcoded or committed (see README "Configuration").
-    static final String DB_URL = System.getenv().getOrDefault("GLIMS_DB_URL", "jdbc:mysql://localhost:3306/genlab_db");
+    // Overridable via the GLIMS_DB_URL environment variable or a `.env` file
+    // in the working directory (see .env.example / README "Configuration"),
+    // so the DB host never needs to be hardcoded or committed.
+    static final String DB_URL = Config.get("GLIMS_DB_URL", "jdbc:mysql://localhost:3306/genlab_db");
     private String user;
     private String pass;
     private Boolean connected;

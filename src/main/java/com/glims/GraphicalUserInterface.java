@@ -94,8 +94,10 @@ public class GraphicalUserInterface implements ActionListener {
 
         JButton[] contentButtons = { ctntBorrowItemBtn, ctntBorrowerListBtn, ctntUpdateInventoryBtn, ctntTransactionHistoryBtn };
         for (JButton btn : contentButtons) {
-            btn.setForeground(branding.white);
+            btn.setContentAreaFilled(true);
             btn.setBackground(branding.maroon);
+            btn.setBorderPainted(false);
+            btn.setForeground(branding.white);
             btn.setFocusable(false);
             btn.setPreferredSize(new Dimension(270, 35));
             btn.addActionListener(this);

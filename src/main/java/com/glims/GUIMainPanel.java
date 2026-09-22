@@ -45,7 +45,7 @@ public class GUIMainPanel extends JPanel {
         JPanel titlePanel = new JPanel();
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
         titlePanel.setOpaque(false);
-        JLabel titleLabel1 = new JLabel("UP TACLOBAN COLLEGE");
+        JLabel titleLabel1 = new JLabel("UP TACLOBAN");
         JLabel titleLabel2 = new JLabel("General Laboratory Database");
         titleLabel1.setAlignmentX(Component.CENTER_ALIGNMENT);
         titleLabel2.setAlignmentX(Component.CENTER_ALIGNMENT);

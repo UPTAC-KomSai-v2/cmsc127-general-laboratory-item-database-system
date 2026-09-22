@@ -39,7 +39,7 @@ public class GUILoginPanel extends JPanel{
         lgnUPLogo.setIcon(new ImageIcon(branding.lgnUPLogoResized));
         
         // Title labels
-        JLabel lgnTitleLabel1 = new JLabel("UP TACLOBAN COLLEGE");
+        JLabel lgnTitleLabel1 = new JLabel("UP TACLOBAN");
         JLabel lgnTitleLabel2 = new JLabel("General Laboratory Database");
         
         lgnTitleLabel1.setFont(branding.sizedFontPalatinoBig);

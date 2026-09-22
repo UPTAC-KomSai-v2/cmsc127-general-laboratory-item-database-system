@@ -117,10 +117,13 @@ You must have the following software installed on your system:
     `database/schema.sql` creates the `genlab_db` database, tables, triggers, and views. `database/seed.sql` loads course/section/instructor/category reference data plus a handful of synthetic sample borrowers for local testing — it contains no real personal data.
 
 3.  **Configure the database connection**
-    By default the app connects to `jdbc:mysql://localhost:3306/genlab_db`. To point at a different host, set the `GLIMS_DB_URL` environment variable before launching, e.g.:
+    By default the app connects to `jdbc:mysql://localhost:3306/genlab_db`. To point at a different host, copy `.env.example` to `.env` and edit it:
     ```sh
-    export GLIMS_DB_URL="jdbc:mysql://localhost:3306/genlab_db"
+    cp .env.example .env
+    # then edit .env, e.g. GLIMS_DB_URL=jdbc:mysql://localhost:3306/genlab_db
     ```
+    `.env` is read automatically from the working directory at startup (see `Config.java`) and is gitignored — never commit your real one. A real `GLIMS_DB_URL` environment variable takes precedence over `.env` if both are set.
+
     The MySQL **username and password are entered at the login screen** — they're used directly as your MySQL credentials, so log in with a MySQL user that has privileges on `genlab_db`.
 
 4.  **Build and run**
@@ -183,11 +186,13 @@ An Entity-Relationship Diagram (ERD) would look like this:
 
 ### Configuration
 
+Copy `.env.example` to `.env` to override defaults; a real environment variable of the same name always takes precedence over `.env`.
+
 | Variable        | Default                                    | Purpose                        |
 | ---------------- | ------------------------------------------- | ------------------------------- |
 | `GLIMS_DB_URL`   | `jdbc:mysql://localhost:3306/genlab_db`     | JDBC connection URL             |
 
-The database username and password are entered at the login screen (not read from environment variables) and used directly as your MySQL credentials — there is no separate application-level user table. Never commit real credentials or a `.env` file to the repository.
+The database username and password are entered at the login screen (not read from `.env`/environment variables) and used directly as your MySQL credentials — there is no separate application-level user table. `.env` is gitignored; never commit your real one.
 
 ---
 
